@@ -41,7 +41,6 @@
             margin-top: 8px;
         }
 
-        /* Tema Branco e Verde */
         :root {
             --primary: #1b5e20;
             --primary-light: #2e7d32;
@@ -246,6 +245,34 @@
             justify-content: center;
         }
 
+        .section-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .btn-add {
+            background: var(--primary-gradient);
+            color: #ffffff;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'Inter', sans-serif;
+            box-shadow: 0 2px 8px rgba(27, 94, 32, 0.15);
+        }
+
+        .btn-add:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(27, 94, 32, 0.25);
+        }
+
         .badge-total {
             font-size: 0.75rem;
             background: var(--badge-bg);
@@ -274,6 +301,7 @@
             transition: var(--transition);
             backdrop-filter: blur(4px);
             -webkit-backdrop-filter: blur(4px);
+            position: relative;
         }
 
         .expense-card:hover {
@@ -281,6 +309,39 @@
             border-color: var(--primary);
             box-shadow: 0 4px 16px var(--shadow-hover);
             transform: translateY(-2px);
+        }
+
+        .expense-card .card-actions {
+            display: flex;
+            gap: 4px;
+            opacity: 0;
+            transition: var(--transition);
+            margin-left: auto;
+        }
+
+        .expense-card:hover .card-actions {
+            opacity: 1;
+        }
+
+        .expense-card .card-actions button {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 4px 6px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            transition: var(--transition);
+        }
+
+        .expense-card .card-actions .btn-edit:hover {
+            color: var(--primary);
+            background: var(--badge-bg);
+        }
+
+        .expense-card .card-actions .btn-delete:hover {
+            color: #dc2626;
+            background: #fee2e2;
         }
 
         .expense-icon {
@@ -389,6 +450,147 @@
         .escolinha-uniforme .expense-icon { background: rgba(76, 175, 80, 0.08); color: #2e7d32; }
         .escolinha-transporte .expense-icon { background: rgba(27, 94, 32, 0.08); color: var(--primary); }
         .escolinha-extra .expense-icon { background: rgba(33, 150, 243, 0.08); color: #1565c0; }
+
+        /* --- MODAL --- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 32px;
+            max-width: 480px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            animation: modalFade 0.3s ease;
+        }
+
+        @keyframes modalFade {
+            from { opacity: 0; transform: scale(0.95) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .modal h2 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .modal .modal-sub {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+        }
+
+        .modal .form-group {
+            margin-bottom: 14px;
+        }
+
+        .modal .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .modal .form-group input,
+        .modal .form-group select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--input-border);
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            transition: var(--transition);
+            outline: none;
+            background: #f8faf8;
+        }
+
+        .modal .form-group input:focus,
+        .modal .form-group select:focus {
+            border-color: var(--input-focus);
+            box-shadow: 0 0 0 3px rgba(27, 94, 32, 0.08);
+            background: #ffffff;
+        }
+
+        .modal .form-group select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%234a6a4a' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+        }
+
+        .modal .form-row {
+            display: flex;
+            gap: 12px;
+        }
+
+        .modal .form-row .form-group {
+            flex: 1;
+        }
+
+        .modal .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: flex-end;
+        }
+
+        .modal .modal-actions button {
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+        }
+
+        .modal .modal-actions .btn-cancel {
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+
+        .modal .modal-actions .btn-cancel:hover {
+            background: #f0f0f0;
+        }
+
+        .modal .modal-actions .btn-confirm {
+            background: var(--primary-gradient);
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(27, 94, 32, 0.2);
+        }
+
+        .modal .modal-actions .btn-confirm:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(27, 94, 32, 0.3);
+        }
+
+        .modal .modal-actions .btn-confirm.delete {
+            background: linear-gradient(135deg, #dc2626, #ef4444);
+        }
 
         /* --- RESUMO --- */
         .summary-area {
@@ -960,6 +1162,17 @@
             .config-grid {
                 grid-template-columns: 1fr 1fr;
             }
+            .modal {
+                padding: 24px;
+                margin: 16px;
+            }
+            .modal .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            .expense-card .card-actions {
+                opacity: 1;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1026,6 +1239,19 @@
                 height: 30px;
                 font-size: 0.8rem;
             }
+            .modal {
+                padding: 18px 16px;
+            }
+            .modal .modal-actions {
+                flex-direction: column;
+            }
+            .modal .modal-actions button {
+                width: 100%;
+                justify-content: center;
+            }
+            .expense-card .card-actions {
+                opacity: 1;
+            }
         }
     </style>
 </head>
@@ -1072,6 +1298,11 @@
                 <div class="section-title">
                     <i class="fas fa-house-chimney"></i> Residência
                 </div>
+                <div class="section-actions">
+                    <button class="btn-add" onclick="openModal('residencial')">
+                        <i class="fas fa-plus"></i> Adicionar
+                    </button>
+                </div>
             </div>
             <div class="expense-grid" id="residentialGrid"></div>
 
@@ -1080,7 +1311,12 @@
                 <div class="section-title">
                     <i class="fas fa-shopping-cart"></i> Supermercado
                 </div>
-                <span class="badge-total" id="mercadoTotalLabel">Total: R$ 0,00</span>
+                <div class="section-actions">
+                    <span class="badge-total" id="mercadoTotalLabel">Total: R$ 0,00</span>
+                    <button class="btn-add" onclick="openModal('mercado')">
+                        <i class="fas fa-plus"></i> Adicionar
+                    </button>
+                </div>
             </div>
             <div class="expense-grid" id="mercadoGrid"></div>
 
@@ -1089,7 +1325,12 @@
                 <div class="section-title">
                     <i class="fas fa-futbol"></i> Escolinha de Futebol
                 </div>
-                <span class="badge-total" id="escolinhaTotalLabel">Total: R$ 0,00</span>
+                <div class="section-actions">
+                    <span class="badge-total" id="escolinhaTotalLabel">Total: R$ 0,00</span>
+                    <button class="btn-add" onclick="openModal('escolinha')">
+                        <i class="fas fa-plus"></i> Adicionar
+                    </button>
+                </div>
             </div>
             <div class="expense-grid" id="escolinhaGrid"></div>
 
@@ -1098,7 +1339,12 @@
                 <div class="section-title">
                     <i class="fas fa-credit-card"></i> Cartões de Crédito
                 </div>
-                <span class="badge-total" id="cardsTotalLabel">Total: R$ 0,00</span>
+                <div class="section-actions">
+                    <span class="badge-total" id="cardsTotalLabel">Total: R$ 0,00</span>
+                    <button class="btn-add" onclick="openModal('cartoes')">
+                        <i class="fas fa-plus"></i> Adicionar
+                    </button>
+                </div>
             </div>
             <div class="expense-grid" id="cardsGrid"></div>
 
@@ -1233,50 +1479,672 @@
         </div>
     </div>
 
+    <!-- MODAL -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <h2 id="modalTitle">Adicionar Despesa</h2>
+            <p class="modal-sub" id="modalSub">Preencha os dados da nova despesa.</p>
+            <div class="form-group">
+                <label>Nome da despesa</label>
+                <input type="text" id="modalName" placeholder="Ex: Condomínio, Internet, etc.">
+            </div>
+            <div class="form-group">
+                <label>Valor (R$)</label>
+                <input type="number" id="modalValue" placeholder="0,00" step="0.01" min="0">
+            </div>
+            <div class="form-group">
+                <label>Ícone</label>
+                <select id="modalIcon">
+                    <option value="fa-building">🏢 Prédio</option>
+                    <option value="fa-file-invoice">📄 Fatura</option>
+                    <option value="fa-trash-alt">🗑️ Lixo</option>
+                    <option value="fa-wifi">📶 Wi-Fi</option>
+                    <option value="fa-tv">📺 TV</option>
+                    <option value="fa-tint">💧 Água</option>
+                    <option value="fa-bolt">⚡ Energia</option>
+                    <option value="fa-car">🚗 Carro</option>
+                    <option value="fa-shield-alt">🛡️ Seguro</option>
+                    <option value="fa-gas-pump">⛽ Combustível</option>
+                    <option value="fa-wrench">🔧 Manutenção</option>
+                    <option value="fa-bread-slice">🍞 Alimentos</option>
+                    <option value="fa-drumstick-bite">🍗 Carnes</option>
+                    <option value="fa-apple-alt">🍎 Frutas</option>
+                    <option value="fa-wine-bottle">🍷 Bebidas</option>
+                    <option value="fa-soap">🧼 Higiene</option>
+                    <option value="fa-broom">🧹 Limpeza</option>
+                    <option value="fa-calendar-check">📅 Mensalidade</option>
+                    <option value="fa-baseball-ball">⚾ Material</option>
+                    <option value="fa-tshirt">👕 Uniforme</option>
+                    <option value="fa-bus">🚌 Transporte</option>
+                    <option value="fa-trophy">🏆 Extra</option>
+                    <option value="fa-credit-card">💳 Cartão</option>
+                    <option value="fa-home">🏠 Casa</option>
+                    <option value="fa-shopping-cart">🛒 Compras</option>
+                    <option value="fa-futbol">⚽ Futebol</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Descrição (opcional)</label>
+                <input type="text" id="modalDesc" placeholder="Breve descrição da despesa">
+            </div>
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+                <button class="btn-confirm" id="modalConfirmBtn" onclick="confirmModal()">
+                    <i class="fas fa-check"></i> Salvar
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
         (function() {
             // ---------- CONFIGURAÇÃO DAS DESPESAS ----------
-            const residentialConfigs = [
-                { id: 'prestacao', label: 'Prestação apartamento', desc: 'Financiamento ou aluguel', icon: 'fa-building', default: 2039 },
-                { id: 'iptu', label: 'IPTU', desc: 'Imposto Predial (mensal)', icon: 'fa-file-invoice', default: 150 },
-                { id: 'taxa_lixo', label: 'Taxa de lixo', desc: 'Coleta urbana', icon: 'fa-trash-alt', default: 23 },
-                { id: 'internet', label: 'Internet', desc: 'Fibra óptica', icon: 'fa-wifi', default: 150 },
-                { id: 'iptv', label: 'IPTV / Streaming', desc: 'Canais por assinatura', icon: 'fa-tv', default: 50 },
-                { id: 'agua', label: 'Água', desc: 'Consumo mensal', icon: 'fa-tint', default: 100 },
-                { id: 'luz', label: 'Luz', desc: 'Energia elétrica', icon: 'fa-bolt', default: 100 },
-                { id: 'carro_fin', label: 'Carro (financiamento)', desc: 'Parcela do veículo', icon: 'fa-car', default: 700 },
-                { id: 'carro_seguro', label: 'Carro (seguro)', desc: 'Proteção automotiva', icon: 'fa-shield-alt', default: 250 },
-                { id: 'carro_combust', label: 'Carro (combustível)', desc: 'Gasolina / etanol', icon: 'fa-gas-pump', default: 350 },
-                { id: 'carro_manut', label: 'Carro (manutenção)', desc: 'Revisões e reparos', icon: 'fa-wrench', default: 150 }
-            ];
+            // Estrutura base: cada categoria tem um array de despesas
+            // Cada despesa: { id, label, desc, icon, default, category }
 
-            const mercadoConfigs = [
-                { id: 'mercado_alimentos', label: 'Alimentos básicos', desc: 'Arroz, feijão, massas', icon: 'fa-bread-slice', default: 350, mercadoClass: 'mercado-alimentos' },
-                { id: 'mercado_carnes', label: 'Carnes e frango', desc: 'Carne bovina, frango, peixe', icon: 'fa-drumstick-bite', default: 280, mercadoClass: 'mercado-carnes' },
-                { id: 'mercado_feira', label: 'Frutas e verduras', desc: 'Feira livre / hortifruti', icon: 'fa-apple-alt', default: 150, mercadoClass: 'mercado-feira' },
-                { id: 'mercado_bebidas', label: 'Bebidas', desc: 'Refrigerantes, sucos, leite', icon: 'fa-wine-bottle', default: 120, mercadoClass: 'mercado-bebidas' },
-                { id: 'mercado_higiene', label: 'Higiene pessoal', desc: 'Shampoo, sabonete, fraldas', icon: 'fa-soap', default: 130, mercadoClass: 'mercado-higiene' },
-                { id: 'mercado_limpeza', label: 'Limpeza', desc: 'Detergente, amaciante', icon: 'fa-broom', default: 80, mercadoClass: 'mercado-limpeza' }
-            ];
+            let expenseData = {
+                residencial: [
+                    { id: 'prestacao', label: 'Prestação apartamento', desc: 'Financiamento ou aluguel', icon: 'fa-building', default: 2039 },
+                    { id: 'iptu', label: 'IPTU', desc: 'Imposto Predial (mensal)', icon: 'fa-file-invoice', default: 150 },
+                    { id: 'taxa_lixo', label: 'Taxa de lixo', desc: 'Coleta urbana', icon: 'fa-trash-alt', default: 23 },
+                    { id: 'internet', label: 'Internet', desc: 'Fibra óptica', icon: 'fa-wifi', default: 150 },
+                    { id: 'iptv', label: 'IPTV / Streaming', desc: 'Canais por assinatura', icon: 'fa-tv', default: 50 },
+                    { id: 'agua', label: 'Água', desc: 'Consumo mensal', icon: 'fa-tint', default: 100 },
+                    { id: 'luz', label: 'Luz', desc: 'Energia elétrica', icon: 'fa-bolt', default: 100 },
+                    { id: 'carro_fin', label: 'Carro (financiamento)', desc: 'Parcela do veículo', icon: 'fa-car', default: 700 },
+                    { id: 'carro_seguro', label: 'Carro (seguro)', desc: 'Proteção automotiva', icon: 'fa-shield-alt', default: 250 },
+                    { id: 'carro_combust', label: 'Carro (combustível)', desc: 'Gasolina / etanol', icon: 'fa-gas-pump', default: 350 },
+                    { id: 'carro_manut', label: 'Carro (manutenção)', desc: 'Revisões e reparos', icon: 'fa-wrench', default: 150 }
+                ],
+                mercado: [
+                    { id: 'mercado_alimentos', label: 'Alimentos básicos', desc: 'Arroz, feijão, massas', icon: 'fa-bread-slice', default: 350 },
+                    { id: 'mercado_carnes', label: 'Carnes e frango', desc: 'Carne bovina, frango, peixe', icon: 'fa-drumstick-bite', default: 280 },
+                    { id: 'mercado_feira', label: 'Frutas e verduras', desc: 'Feira livre / hortifruti', icon: 'fa-apple-alt', default: 150 },
+                    { id: 'mercado_bebidas', label: 'Bebidas', desc: 'Refrigerantes, sucos, leite', icon: 'fa-wine-bottle', default: 120 },
+                    { id: 'mercado_higiene', label: 'Higiene pessoal', desc: 'Shampoo, sabonete, fraldas', icon: 'fa-soap', default: 130 },
+                    { id: 'mercado_limpeza', label: 'Limpeza', desc: 'Detergente, amaciante', icon: 'fa-broom', default: 80 }
+                ],
+                escolinha: [
+                    { id: 'escolinha_mensalidade', label: 'Mensalidade', desc: 'Taxa mensal da escolinha', icon: 'fa-calendar-check', default: 250 },
+                    { id: 'escolinha_material', label: 'Material esportivo', desc: 'Bolas, cones, etc.', icon: 'fa-baseball-ball', default: 80 },
+                    { id: 'escolinha_uniforme', label: 'Uniforme', desc: 'Camisa, calção, meias', icon: 'fa-tshirt', default: 120 },
+                    { id: 'escolinha_transporte', label: 'Transporte', desc: 'Ida e volta aos treinos', icon: 'fa-bus', default: 150 },
+                    { id: 'escolinha_extra', label: 'Atividades extras', desc: 'Torneios, chuteiras', icon: 'fa-trophy', default: 90 }
+                ],
+                cartoes: [
+                    { id: 'cartao_itau', label: 'Cartão Itaú', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 320 },
+                    { id: 'cartao_brasil', label: 'Cartão do Brasil', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 280 },
+                    { id: 'cartao_bradesco', label: 'Cartão Bradesco', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 410 },
+                    { id: 'cartao_nubank', label: 'Cartão Nubank', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 550 },
+                    { id: 'cartao_palmeira', label: 'Cartão Palmeiras', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 190 },
+                    { id: 'cartao_magalu', label: 'Cartão Magalu', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 230 }
+                ]
+            };
 
-            const escolinhaConfigs = [
-                { id: 'escolinha_mensalidade', label: 'Mensalidade', desc: 'Taxa mensal da escolinha', icon: 'fa-calendar-check', default: 250, escolinhaClass: 'escolinha-mensalidade' },
-                { id: 'escolinha_material', label: 'Material esportivo', desc: 'Bolas, cones, etc.', icon: 'fa-baseball-ball', default: 80, escolinhaClass: 'escolinha-material' },
-                { id: 'escolinha_uniforme', label: 'Uniforme', desc: 'Camisa, calção, meias', icon: 'fa-tshirt', default: 120, escolinhaClass: 'escolinha-uniforme' },
-                { id: 'escolinha_transporte', label: 'Transporte', desc: 'Ida e volta aos treinos', icon: 'fa-bus', default: 150, escolinhaClass: 'escolinha-transporte' },
-                { id: 'escolinha_extra', label: 'Atividades extras', desc: 'Torneios, chuteiras', icon: 'fa-trophy', default: 90, escolinhaClass: 'escolinha-extra' }
-            ];
+            // Mapeamento de categorias para classes CSS
+            const categoryClasses = {
+                residencial: '',
+                mercado: 'mercado-',
+                escolinha: 'escolinha-',
+                cartoes: 'card-'
+            };
 
-            const cardsConfigs = [
-                { id: 'cartao_itau', label: 'Cartão Itaú', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 320, cardClass: 'card-itau' },
-                { id: 'cartao_brasil', label: 'Cartão do Brasil', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 280, cardClass: 'card-brasil' },
-                { id: 'cartao_bradesco', label: 'Cartão Bradesco', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 410, cardClass: 'card-bradesco' },
-                { id: 'cartao_nubank', label: 'Cartão Nubank', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 550, cardClass: 'card-nubank' },
-                { id: 'cartao_palmeira', label: 'Cartão Palmeiras', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 190, cardClass: 'card-palmeira' },
-                { id: 'cartao_magalu', label: 'Cartão Magalu', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 230, cardClass: 'card-magalu' }
-            ];
+            // ---------- REFERÊNCIAS ----------
+            const residentialGrid = document.getElementById('residentialGrid');
+            const mercadoGrid = document.getElementById('mercadoGrid');
+            const escolinhaGrid = document.getElementById('escolinhaGrid');
+            const cardsGrid = document.getElementById('cardsGrid');
+            const totalNumberSpan = document.getElementById('totalNumber');
+            const cardsTotalLabel = document.getElementById('cardsTotalLabel');
+            const mercadoTotalLabel = document.getElementById('mercadoTotalLabel');
+            const escolinhaTotalLabel = document.getElementById('escolinhaTotalLabel');
+            const resetBtn = document.getElementById('resetBtn');
 
-            // ---------- TEMAS COM ÍCONES PERSONALIZADOS ----------
+            const reportTotal = document.getElementById('reportTotal');
+            const reportResidencial = document.getElementById('reportResidencial');
+            const reportMercado = document.getElementById('reportMercado');
+            const reportEscolinha = document.getElementById('reportEscolinha');
+            const reportCartoes = document.getElementById('reportCartoes');
+            const reportTotalGrande = document.getElementById('reportTotalGrande');
+
+            const barResidencial = document.getElementById('barResidencial');
+            const barMercado = document.getElementById('barMercado');
+            const barEscolinha = document.getElementById('barEscolinha');
+            const barCartoes = document.getElementById('barCartoes');
+            const barResidencialValue = document.getElementById('barResidencialValue');
+            const barMercadoValue = document.getElementById('barMercadoValue');
+            const barEscolinhaValue = document.getElementById('barEscolinhaValue');
+            const barCartoesValue = document.getElementById('barCartoesValue');
+
+            const historyList = document.getElementById('historyList');
+            const saveMonthBtn = document.getElementById('saveMonthBtn');
+            const clearHistoryBtn = document.getElementById('clearHistoryBtn');
+            const themeGrid = document.getElementById('themeGrid');
+
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            const saveStatus = document.getElementById('saveStatus');
+            const saveIndicator = document.getElementById('saveIndicator');
+
+            // Modal
+            const modalOverlay = document.getElementById('modalOverlay');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalSub = document.getElementById('modalSub');
+            const modalName = document.getElementById('modalName');
+            const modalValue = document.getElementById('modalValue');
+            const modalIcon = document.getElementById('modalIcon');
+            const modalDesc = document.getElementById('modalDesc');
+            const modalConfirmBtn = document.getElementById('modalConfirmBtn');
+
+            let allInputs = [];
+            let residentialCount = 0;
+            let mercadoCount = 0;
+            let escolinhaCount = 0;
+            let saveTimeout = null;
+            let modalCategory = '';
+            let modalEditId = null;
+            let inputMap = {};
+
+            // ---------- SALVAMENTO AUTOMÁTICO ----------
+            function showSavingStatus() {
+                saveStatus.textContent = 'Salvando...';
+                saveIndicator.className = 'save-indicator saving';
+            }
+
+            function showSavedStatus() {
+                saveStatus.textContent = 'Salvo';
+                saveIndicator.className = 'save-indicator';
+            }
+
+            function saveToLocalStorage() {
+                try {
+                    // Salva os dados das despesas
+                    localStorage.setItem('expenseData', JSON.stringify(expenseData));
+                    // Salva os valores atuais
+                    const values = {};
+                    Object.keys(inputMap).forEach(id => {
+                        if (inputMap[id]) {
+                            values[id] = inputMap[id].value;
+                        }
+                    });
+                    localStorage.setItem('despesasValues', JSON.stringify(values));
+                    showSavedStatus();
+                } catch (e) {
+                    console.error('Erro ao salvar:', e);
+                }
+            }
+
+            function scheduleSave() {
+                showSavingStatus();
+                if (saveTimeout) clearTimeout(saveTimeout);
+                saveTimeout = setTimeout(saveToLocalStorage, 600);
+            }
+
+            function loadFromLocalStorage() {
+                try {
+                    // Carrega a estrutura de despesas
+                    const savedData = localStorage.getItem('expenseData');
+                    if (savedData) {
+                        const parsed = JSON.parse(savedData);
+                        // Mantém os IDs para não quebrar referências
+                        Object.keys(parsed).forEach(cat => {
+                            if (expenseData[cat]) {
+                                // Atualiza mantendo os IDs existentes
+                                const existingIds = expenseData[cat].map(e => e.id);
+                                parsed[cat].forEach(item => {
+                                    if (!existingIds.includes(item.id)) {
+                                        expenseData[cat].push(item);
+                                    } else {
+                                        // Atualiza os dados do item existente
+                                        const idx = expenseData[cat].findIndex(e => e.id === item.id);
+                                        if (idx >= 0) {
+                                            expenseData[cat][idx] = item;
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    }
+
+                    // Carrega os valores
+                    const savedValues = localStorage.getItem('despesasValues');
+                    if (savedValues) {
+                        const values = JSON.parse(savedValues);
+                        Object.keys(values).forEach(id => {
+                            if (inputMap[id]) {
+                                inputMap[id].value = values[id];
+                            }
+                        });
+                        return true;
+                    }
+                    return false;
+                } catch (e) {
+                    console.error('Erro ao carregar:', e);
+                    return false;
+                }
+            }
+
+            // ---------- FUNÇÃO PARA CRIAR CARDS ----------
+            function buildCards(category) {
+                const configs = expenseData[category];
+                const containerMap = {
+                    residencial: residentialGrid,
+                    mercado: mercadoGrid,
+                    escolinha: escolinhaGrid,
+                    cartoes: cardsGrid
+                };
+                const container = containerMap[category];
+                if (!container) return;
+
+                container.innerHTML = '';
+                const inputs = [];
+
+                // Ordena por label para consistência
+                const sorted = [...configs].sort((a, b) => a.label.localeCompare(b.label));
+
+                sorted.forEach((config, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'expense-card';
+
+                    // Adiciona classe específica da categoria se existir
+                    const prefix = categoryClasses[category] || '';
+                    if (prefix && config.id.startsWith(prefix.replace('-', '')) || category === 'residencial') {
+                        // Para mercado, escolinha e cartoes, adiciona classe
+                        if (category === 'mercado') card.classList.add('mercado-alimentos');
+                        else if (category === 'escolinha') card.classList.add('escolinha-mensalidade');
+                        else if (category === 'cartoes') card.classList.add('card-itau');
+                    }
+
+                    const iconDiv = document.createElement('div');
+                    iconDiv.className = 'expense-icon';
+                    iconDiv.innerHTML = `<i class="fas ${config.icon}"></i>`;
+                    card.appendChild(iconDiv);
+
+                    const infoDiv = document.createElement('div');
+                    infoDiv.className = 'expense-info';
+
+                    const label = document.createElement('label');
+                    label.textContent = config.label;
+                    infoDiv.appendChild(label);
+
+                    const desc = document.createElement('span');
+                    desc.className = 'small-desc';
+                    desc.textContent = config.desc || '';
+                    infoDiv.appendChild(desc);
+
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'expense-input-wrapper';
+
+                    const currencySpan = document.createElement('span');
+                    currencySpan.textContent = 'R$';
+                    wrapper.appendChild(currencySpan);
+
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    input.id = `input_${config.id}`;
+                    input.step = '0.01';
+                    input.min = '0';
+                    input.value = config.default ? config.default.toFixed(2) : '0.00';
+                    wrapper.appendChild(input);
+
+                    infoDiv.appendChild(wrapper);
+                    card.appendChild(infoDiv);
+
+                    // Botões de ação
+                    const actionsDiv = document.createElement('div');
+                    actionsDiv.className = 'card-actions';
+                    const editBtn = document.createElement('button');
+                    editBtn.className = 'btn-edit';
+                    editBtn.innerHTML = '<i class="fas fa-pen"></i>';
+                    editBtn.title = 'Editar';
+                    editBtn.onclick = (e) => {
+                        e.stopPropagation();
+                        openModal(category, config.id);
+                    };
+                    actionsDiv.appendChild(editBtn);
+
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.className = 'btn-delete';
+                    deleteBtn.innerHTML = '<i class="fas fa-times"></i>';
+                    deleteBtn.title = 'Remover';
+                    deleteBtn.onclick = (e) => {
+                        e.stopPropagation();
+                        if (confirm(`Remover "${config.label}"?`)) {
+                            deleteExpense(category, config.id);
+                        }
+                    };
+                    actionsDiv.appendChild(deleteBtn);
+
+                    card.appendChild(actionsDiv);
+                    container.appendChild(card);
+
+                    // Armazena referência do input
+                    inputMap[config.id] = input;
+                    inputs.push(input);
+                });
+
+                return inputs;
+            }
+
+            // ---------- GERENCIAR DESPESAS ----------
+            function deleteExpense(category, id) {
+                const idx = expenseData[category].findIndex(e => e.id === id);
+                if (idx >= 0) {
+                    expenseData[category].splice(idx, 1);
+                    // Remove do inputMap
+                    delete inputMap[id];
+                    // Reconstroi a grid
+                    rebuildAllGrids();
+                    updateReport();
+                    scheduleSave();
+                }
+            }
+
+            function addExpense(category, data) {
+                // Gera um ID único
+                const baseId = data.label.toLowerCase().replace(/\s+/g, '_').replace(/[^a-z0-9_]/g, '');
+                let newId = baseId;
+                let counter = 1;
+                while (expenseData[category].some(e => e.id === newId)) {
+                    newId = `${baseId}_${counter}`;
+                    counter++;
+                }
+
+                const newExpense = {
+                    id: newId,
+                    label: data.label,
+                    desc: data.desc || '',
+                    icon: data.icon || 'fa-credit-card',
+                    default: parseFloat(data.value) || 0
+                };
+
+                expenseData[category].push(newExpense);
+                rebuildAllGrids();
+                updateReport();
+                scheduleSave();
+            }
+
+            function editExpense(category, id, data) {
+                const idx = expenseData[category].findIndex(e => e.id === id);
+                if (idx >= 0) {
+                    expenseData[category][idx].label = data.label;
+                    expenseData[category][idx].desc = data.desc || '';
+                    expenseData[category][idx].icon = data.icon || 'fa-credit-card';
+                    expenseData[category][idx].default = parseFloat(data.value) || 0;
+                    rebuildAllGrids();
+                    updateReport();
+                    scheduleSave();
+                }
+            }
+
+            function rebuildAllGrids() {
+                // Salva os valores atuais antes de reconstruir
+                const currentValues = {};
+                Object.keys(inputMap).forEach(id => {
+                    if (inputMap[id]) {
+                        currentValues[id] = inputMap[id].value;
+                    }
+                });
+
+                // Reconstroi todas as grids
+                buildCards('residencial');
+                buildCards('mercado');
+                buildCards('escolinha');
+                buildCards('cartoes');
+
+                // Restaura os valores
+                Object.keys(currentValues).forEach(id => {
+                    if (inputMap[id]) {
+                        inputMap[id].value = currentValues[id];
+                    }
+                });
+
+                // Atualiza contagens
+                residentialCount = expenseData.residencial.length;
+                mercadoCount = expenseData.mercado.length;
+                escolinhaCount = expenseData.escolinha.length;
+
+                // Reatualiza os totais
+                updateReport();
+            }
+
+            // ---------- MODAL ----------
+            function openModal(category, editId = null) {
+                modalCategory = category;
+                modalEditId = editId;
+
+                const categoryNames = {
+                    residencial: 'Residência',
+                    mercado: 'Supermercado',
+                    escolinha: 'Escolinha de Futebol',
+                    cartoes: 'Cartões de Crédito'
+                };
+
+                if (editId) {
+                    const item = expenseData[category].find(e => e.id === editId);
+                    if (item) {
+                        modalTitle.textContent = 'Editar Despesa';
+                        modalSub.textContent = `Editando despesa em ${categoryNames[category]}`;
+                        modalName.value = item.label;
+                        modalValue.value = item.default;
+                        modalIcon.value = item.icon;
+                        modalDesc.value = item.desc || '';
+                        modalConfirmBtn.innerHTML = '<i class="fas fa-save"></i> Atualizar';
+                    }
+                } else {
+                    modalTitle.textContent = 'Adicionar Despesa';
+                    modalSub.textContent = `Nova despesa em ${categoryNames[category]}`;
+                    modalName.value = '';
+                    modalValue.value = '';
+                    modalIcon.value = 'fa-credit-card';
+                    modalDesc.value = '';
+                    modalConfirmBtn.innerHTML = '<i class="fas fa-plus"></i> Adicionar';
+                }
+
+                modalOverlay.classList.add('active');
+            }
+
+            function closeModal() {
+                modalOverlay.classList.remove('active');
+                modalEditId = null;
+            }
+
+            function confirmModal() {
+                const name = modalName.value.trim();
+                const value = modalValue.value.trim();
+                const icon = modalIcon.value;
+                const desc = modalDesc.value.trim();
+
+                if (!name) {
+                    alert('Por favor, informe o nome da despesa.');
+                    modalName.focus();
+                    return;
+                }
+
+                if (!value || parseFloat(value) <= 0) {
+                    alert('Por favor, informe um valor válido.');
+                    modalValue.focus();
+                    return;
+                }
+
+                const data = {
+                    label: name,
+                    value: parseFloat(value),
+                    icon: icon,
+                    desc: desc
+                };
+
+                if (modalEditId) {
+                    editExpense(modalCategory, modalEditId, data);
+                } else {
+                    addExpense(modalCategory, data);
+                }
+
+                closeModal();
+            }
+
+            // Fechar modal clicando fora
+            modalOverlay.addEventListener('click', function(e) {
+                if (e.target === this) closeModal();
+            });
+
+            // Fechar modal com ESC
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') closeModal();
+            });
+
+            // ---------- CALCULAR TOTAIS ----------
+            function calculateTotals() {
+                let sum = 0;
+                let cardsSum = 0;
+                let mercadoSum = 0;
+                let escolinhaSum = 0;
+                let residencialSum = 0;
+
+                // Mapeia quais inputs pertencem a cada categoria
+                const allConfigs = [
+                    ...expenseData.residencial,
+                    ...expenseData.mercado,
+                    ...expenseData.escolinha,
+                    ...expenseData.cartoes
+                ];
+
+                allConfigs.forEach((config) => {
+                    const input = inputMap[config.id];
+                    if (input) {
+                        let val = parseFloat(input.value.replace(',', '.'));
+                        if (isNaN(val) || val < 0) val = 0;
+                        sum += val;
+
+                        if (expenseData.residencial.some(e => e.id === config.id)) {
+                            residencialSum += val;
+                        } else if (expenseData.mercado.some(e => e.id === config.id)) {
+                            mercadoSum += val;
+                        } else if (expenseData.escolinha.some(e => e.id === config.id)) {
+                            escolinhaSum += val;
+                        } else if (expenseData.cartoes.some(e => e.id === config.id)) {
+                            cardsSum += val;
+                        }
+                    }
+                });
+
+                return { sum, residencialSum, mercadoSum, escolinhaSum, cardsSum };
+            }
+
+            // ---------- ATUALIZAR RELATÓRIO ----------
+            function updateReport() {
+                const { sum, residencialSum, mercadoSum, escolinhaSum, cardsSum } = calculateTotals();
+
+                totalNumberSpan.textContent = sum.toFixed(2);
+                cardsTotalLabel.textContent = `Total: R$ ${cardsSum.toFixed(2)}`;
+                mercadoTotalLabel.textContent = `Total: R$ ${mercadoSum.toFixed(2)}`;
+                escolinhaTotalLabel.textContent = `Total: R$ ${escolinhaSum.toFixed(2)}`;
+
+                reportTotal.textContent = `R$ ${sum.toFixed(2)}`;
+                reportResidencial.textContent = `R$ ${residencialSum.toFixed(2)}`;
+                reportMercado.textContent = `R$ ${mercadoSum.toFixed(2)}`;
+                reportEscolinha.textContent = `R$ ${escolinhaSum.toFixed(2)}`;
+                reportCartoes.textContent = `R$ ${cardsSum.toFixed(2)}`;
+                reportTotalGrande.textContent = sum.toFixed(2);
+
+                const maxVal = Math.max(residencialSum, mercadoSum, escolinhaSum, cardsSum, 1);
+                const pctResidencial = (residencialSum / maxVal) * 100;
+                const pctMercado = (mercadoSum / maxVal) * 100;
+                const pctEscolinha = (escolinhaSum / maxVal) * 100;
+                const pctCartoes = (cardsSum / maxVal) * 100;
+
+                barResidencial.style.width = `${Math.min(pctResidencial, 100)}%`;
+                barMercado.style.width = `${Math.min(pctMercado, 100)}%`;
+                barEscolinha.style.width = `${Math.min(pctEscolinha, 100)}%`;
+                barCartoes.style.width = `${Math.min(pctCartoes, 100)}%`;
+
+                barResidencialValue.textContent = `R$ ${residencialSum.toFixed(0)}`;
+                barMercadoValue.textContent = `R$ ${mercadoSum.toFixed(0)}`;
+                barEscolinhaValue.textContent = `R$ ${escolinhaSum.toFixed(0)}`;
+                barCartoesValue.textContent = `R$ ${cardsSum.toFixed(0)}`;
+
+                scheduleSave();
+
+                return { sum, residencialSum, mercadoSum, escolinhaSum, cardsSum };
+            }
+
+            // ---------- HISTÓRICO ----------
+            function loadHistory() {
+                const history = JSON.parse(localStorage.getItem('despesasHistory') || '[]');
+                renderHistory(history);
+            }
+
+            function renderHistory(history) {
+                if (history.length === 0) {
+                    historyList.innerHTML = `
+                        <div class="empty-history">
+                            <i class="fas fa-calendar-plus"></i>
+                            Nenhum mês salvo ainda.<br>
+                            Clique em "Salvar mês" para começar.
+                        </div>
+                    `;
+                    return;
+                }
+
+                historyList.innerHTML = history.map((item, index) => `
+                    <div class="history-item">
+                        <span class="month"><i class="fas fa-calendar-alt"></i> ${item.month}</span>
+                        <div class="details">
+                            <span><i class="fas fa-home" style="color: var(--primary);"></i> R$ ${item.residencial.toFixed(2)}</span>
+                            <span><i class="fas fa-shopping-cart" style="color: #e65100;"></i> R$ ${item.mercado.toFixed(2)}</span>
+                            <span><i class="fas fa-futbol" style="color: #6a1b9a;"></i> R$ ${item.escolinha.toFixed(2)}</span>
+                            <span><i class="fas fa-credit-card" style="color: #c62828;"></i> R$ ${item.cartoes.toFixed(2)}</span>
+                            <span class="total"><i class="fas fa-calculator"></i> R$ ${item.total.toFixed(2)}</span>
+                        </div>
+                        <button class="delete-btn" data-index="${index}" title="Remover">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                `).join('');
+
+                document.querySelectorAll('.delete-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const index = parseInt(this.dataset.index);
+                        deleteHistoryItem(index);
+                    });
+                });
+            }
+
+            function saveMonth() {
+                const { sum, residencialSum, mercadoSum, escolinhaSum, cardsSum } = calculateTotals();
+                const now = new Date();
+                const monthName = now.toLocaleString('pt-BR', { month: 'long', year: 'numeric' });
+
+                const history = JSON.parse(localStorage.getItem('despesasHistory') || '[]');
+                history.push({
+                    month: monthName.charAt(0).toUpperCase() + monthName.slice(1),
+                    residencial: residencialSum,
+                    mercado: mercadoSum,
+                    escolinha: escolinhaSum,
+                    cartoes: cardsSum,
+                    total: sum,
+                    timestamp: now.getTime()
+                });
+                localStorage.setItem('despesasHistory', JSON.stringify(history));
+                renderHistory(history);
+            }
+
+            function deleteHistoryItem(index) {
+                const history = JSON.parse(localStorage.getItem('despesasHistory') || '[]');
+                history.splice(index, 1);
+                localStorage.setItem('despesasHistory', JSON.stringify(history));
+                renderHistory(history);
+            }
+
+            function clearHistory() {
+                if (confirm('Tem certeza que deseja limpar todo o histórico?')) {
+                    localStorage.removeItem('despesasHistory');
+                    renderHistory([]);
+                }
+            }
+
+            // ---------- TEMAS ----------
             const themes = [
                 {
                     id: 'verde_branco',
@@ -1739,296 +2607,7 @@
                 }
             ];
 
-            // ---------- REFERÊNCIAS ----------
-            const residentialGrid = document.getElementById('residentialGrid');
-            const mercadoGrid = document.getElementById('mercadoGrid');
-            const escolinhaGrid = document.getElementById('escolinhaGrid');
-            const cardsGrid = document.getElementById('cardsGrid');
-            const totalNumberSpan = document.getElementById('totalNumber');
-            const cardsTotalLabel = document.getElementById('cardsTotalLabel');
-            const mercadoTotalLabel = document.getElementById('mercadoTotalLabel');
-            const escolinhaTotalLabel = document.getElementById('escolinhaTotalLabel');
-            const resetBtn = document.getElementById('resetBtn');
-
-            const reportTotal = document.getElementById('reportTotal');
-            const reportResidencial = document.getElementById('reportResidencial');
-            const reportMercado = document.getElementById('reportMercado');
-            const reportEscolinha = document.getElementById('reportEscolinha');
-            const reportCartoes = document.getElementById('reportCartoes');
-            const reportTotalGrande = document.getElementById('reportTotalGrande');
-
-            const barResidencial = document.getElementById('barResidencial');
-            const barMercado = document.getElementById('barMercado');
-            const barEscolinha = document.getElementById('barEscolinha');
-            const barCartoes = document.getElementById('barCartoes');
-            const barResidencialValue = document.getElementById('barResidencialValue');
-            const barMercadoValue = document.getElementById('barMercadoValue');
-            const barEscolinhaValue = document.getElementById('barEscolinhaValue');
-            const barCartoesValue = document.getElementById('barCartoesValue');
-
-            const historyList = document.getElementById('historyList');
-            const saveMonthBtn = document.getElementById('saveMonthBtn');
-            const clearHistoryBtn = document.getElementById('clearHistoryBtn');
-            const themeGrid = document.getElementById('themeGrid');
-
-            const tabBtns = document.querySelectorAll('.tab-btn');
-            const tabContents = document.querySelectorAll('.tab-content');
-
-            const saveStatus = document.getElementById('saveStatus');
-            const saveIndicator = document.getElementById('saveIndicator');
-
-            let allInputs = [];
-            let residentialCount = 0;
-            let mercadoCount = 0;
-            let escolinhaCount = 0;
-            let saveTimeout = null;
-
-            // ---------- SALVAMENTO AUTOMÁTICO ----------
-            function showSavingStatus() {
-                saveStatus.textContent = 'Salvando...';
-                saveIndicator.className = 'save-indicator saving';
-            }
-
-            function showSavedStatus() {
-                saveStatus.textContent = 'Salvo';
-                saveIndicator.className = 'save-indicator';
-            }
-
-            function saveToLocalStorage() {
-                const values = {};
-                const allConfigs = [...residentialConfigs, ...mercadoConfigs, ...escolinhaConfigs, ...cardsConfigs];
-                allConfigs.forEach((config, index) => {
-                    if (allInputs[index]) {
-                        values[config.id] = allInputs[index].value;
-                    }
-                });
-                localStorage.setItem('despesasValues', JSON.stringify(values));
-                showSavedStatus();
-            }
-
-            function scheduleSave() {
-                showSavingStatus();
-                if (saveTimeout) clearTimeout(saveTimeout);
-                saveTimeout = setTimeout(saveToLocalStorage, 600);
-            }
-
-            function loadFromLocalStorage() {
-                const saved = localStorage.getItem('despesasValues');
-                if (!saved) return false;
-                try {
-                    const values = JSON.parse(saved);
-                    const allConfigs = [...residentialConfigs, ...mercadoConfigs, ...escolinhaConfigs, ...cardsConfigs];
-                    allConfigs.forEach((config, index) => {
-                        if (allInputs[index] && values[config.id] !== undefined) {
-                            allInputs[index].value = values[config.id];
-                        }
-                    });
-                    return true;
-                } catch (e) {
-                    return false;
-                }
-            }
-
-            // ---------- FUNÇÃO PARA CRIAR CARDS ----------
-            function buildCards(configs, container, isCard = false, isMercado = false, isEscolinha = false) {
-                container.innerHTML = '';
-                const inputs = [];
-
-                configs.forEach(config => {
-                    const card = document.createElement('div');
-                    card.className = 'expense-card';
-                    if (isCard && config.cardClass) {
-                        card.classList.add(config.cardClass);
-                    }
-                    if (isMercado && config.mercadoClass) {
-                        card.classList.add(config.mercadoClass);
-                    }
-                    if (isEscolinha && config.escolinhaClass) {
-                        card.classList.add(config.escolinhaClass);
-                    }
-
-                    const iconDiv = document.createElement('div');
-                    iconDiv.className = 'expense-icon';
-                    iconDiv.innerHTML = `<i class="fas ${config.icon}"></i>`;
-                    card.appendChild(iconDiv);
-
-                    const infoDiv = document.createElement('div');
-                    infoDiv.className = 'expense-info';
-
-                    const label = document.createElement('label');
-                    label.textContent = config.label;
-                    infoDiv.appendChild(label);
-
-                    const desc = document.createElement('span');
-                    desc.className = 'small-desc';
-                    desc.textContent = config.desc;
-                    infoDiv.appendChild(desc);
-
-                    const wrapper = document.createElement('div');
-                    wrapper.className = 'expense-input-wrapper';
-
-                    const currencySpan = document.createElement('span');
-                    currencySpan.textContent = 'R$';
-                    wrapper.appendChild(currencySpan);
-
-                    const input = document.createElement('input');
-                    input.type = 'number';
-                    input.id = `input_${config.id}`;
-                    input.step = '0.01';
-                    input.min = '0';
-                    input.value = config.default.toFixed(2);
-                    wrapper.appendChild(input);
-
-                    infoDiv.appendChild(wrapper);
-                    card.appendChild(infoDiv);
-                    container.appendChild(card);
-
-                    inputs.push(input);
-                });
-
-                return inputs;
-            }
-
-            // ---------- CALCULAR TOTAIS ----------
-            function calculateTotals() {
-                let sum = 0;
-                let cardsSum = 0;
-                let mercadoSum = 0;
-                let escolinhaSum = 0;
-                let residencialSum = 0;
-
-                allInputs.forEach((input, index) => {
-                    let val = parseFloat(input.value.replace(',', '.'));
-                    if (isNaN(val) || val < 0) val = 0;
-                    sum += val;
-
-                    if (index < residentialCount) {
-                        residencialSum += val;
-                    } else if (index >= residentialCount && index < residentialCount + mercadoCount) {
-                        mercadoSum += val;
-                    } else if (index >= residentialCount + mercadoCount && index < residentialCount + mercadoCount + escolinhaCount) {
-                        escolinhaSum += val;
-                    } else if (index >= residentialCount + mercadoCount + escolinhaCount) {
-                        cardsSum += val;
-                    }
-                });
-
-                return { sum, residencialSum, mercadoSum, escolinhaSum, cardsSum };
-            }
-
-            // ---------- ATUALIZAR RELATÓRIO ----------
-            function updateReport() {
-                const { sum, residencialSum, mercadoSum, escolinhaSum, cardsSum } = calculateTotals();
-
-                totalNumberSpan.textContent = sum.toFixed(2);
-                cardsTotalLabel.textContent = `Total: R$ ${cardsSum.toFixed(2)}`;
-                mercadoTotalLabel.textContent = `Total: R$ ${mercadoSum.toFixed(2)}`;
-                escolinhaTotalLabel.textContent = `Total: R$ ${escolinhaSum.toFixed(2)}`;
-
-                reportTotal.textContent = `R$ ${sum.toFixed(2)}`;
-                reportResidencial.textContent = `R$ ${residencialSum.toFixed(2)}`;
-                reportMercado.textContent = `R$ ${mercadoSum.toFixed(2)}`;
-                reportEscolinha.textContent = `R$ ${escolinhaSum.toFixed(2)}`;
-                reportCartoes.textContent = `R$ ${cardsSum.toFixed(2)}`;
-                reportTotalGrande.textContent = sum.toFixed(2);
-
-                const maxVal = Math.max(residencialSum, mercadoSum, escolinhaSum, cardsSum, 1);
-                const pctResidencial = (residencialSum / maxVal) * 100;
-                const pctMercado = (mercadoSum / maxVal) * 100;
-                const pctEscolinha = (escolinhaSum / maxVal) * 100;
-                const pctCartoes = (cardsSum / maxVal) * 100;
-
-                barResidencial.style.width = `${Math.min(pctResidencial, 100)}%`;
-                barMercado.style.width = `${Math.min(pctMercado, 100)}%`;
-                barEscolinha.style.width = `${Math.min(pctEscolinha, 100)}%`;
-                barCartoes.style.width = `${Math.min(pctCartoes, 100)}%`;
-
-                barResidencialValue.textContent = `R$ ${residencialSum.toFixed(0)}`;
-                barMercadoValue.textContent = `R$ ${mercadoSum.toFixed(0)}`;
-                barEscolinhaValue.textContent = `R$ ${escolinhaSum.toFixed(0)}`;
-                barCartoesValue.textContent = `R$ ${cardsSum.toFixed(0)}`;
-
-                scheduleSave();
-
-                return { sum, residencialSum, mercadoSum, escolinhaSum, cardsSum };
-            }
-
-            // ---------- HISTÓRICO ----------
-            function loadHistory() {
-                const history = JSON.parse(localStorage.getItem('despesasHistory') || '[]');
-                renderHistory(history);
-            }
-
-            function renderHistory(history) {
-                if (history.length === 0) {
-                    historyList.innerHTML = `
-                        <div class="empty-history">
-                            <i class="fas fa-calendar-plus"></i>
-                            Nenhum mês salvo ainda.<br>
-                            Clique em "Salvar mês" para começar.
-                        </div>
-                    `;
-                    return;
-                }
-
-                historyList.innerHTML = history.map((item, index) => `
-                    <div class="history-item">
-                        <span class="month"><i class="fas fa-calendar-alt"></i> ${item.month}</span>
-                        <div class="details">
-                            <span><i class="fas fa-home" style="color: var(--primary);"></i> R$ ${item.residencial.toFixed(2)}</span>
-                            <span><i class="fas fa-shopping-cart" style="color: #e65100;"></i> R$ ${item.mercado.toFixed(2)}</span>
-                            <span><i class="fas fa-futbol" style="color: #6a1b9a;"></i> R$ ${item.escolinha.toFixed(2)}</span>
-                            <span><i class="fas fa-credit-card" style="color: #c62828;"></i> R$ ${item.cartoes.toFixed(2)}</span>
-                            <span class="total"><i class="fas fa-calculator"></i> R$ ${item.total.toFixed(2)}</span>
-                        </div>
-                        <button class="delete-btn" data-index="${index}" title="Remover">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                `).join('');
-
-                document.querySelectorAll('.delete-btn').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const index = parseInt(this.dataset.index);
-                        deleteHistoryItem(index);
-                    });
-                });
-            }
-
-            function saveMonth() {
-                const { sum, residencialSum, mercadoSum, escolinhaSum, cardsSum } = calculateTotals();
-                const now = new Date();
-                const monthName = now.toLocaleString('pt-BR', { month: 'long', year: 'numeric' });
-
-                const history = JSON.parse(localStorage.getItem('despesasHistory') || '[]');
-                history.push({
-                    month: monthName.charAt(0).toUpperCase() + monthName.slice(1),
-                    residencial: residencialSum,
-                    mercado: mercadoSum,
-                    escolinha: escolinhaSum,
-                    cartoes: cardsSum,
-                    total: sum,
-                    timestamp: now.getTime()
-                });
-                localStorage.setItem('despesasHistory', JSON.stringify(history));
-                renderHistory(history);
-            }
-
-            function deleteHistoryItem(index) {
-                const history = JSON.parse(localStorage.getItem('despesasHistory') || '[]');
-                history.splice(index, 1);
-                localStorage.setItem('despesasHistory', JSON.stringify(history));
-                renderHistory(history);
-            }
-
-            function clearHistory() {
-                if (confirm('Tem certeza que deseja limpar todo o histórico?')) {
-                    localStorage.removeItem('despesasHistory');
-                    renderHistory([]);
-                }
-            }
-
-            // ---------- TEMAS ----------
+            // ---------- FUNÇÕES DE TEMA ----------
             function applyTheme(themeId) {
                 const theme = themes.find(t => t.id === themeId);
                 if (!theme) return;
@@ -2076,12 +2655,51 @@
 
             // ---------- RESETAR ----------
             function resetToDefaults() {
-                const allConfigs = [...residentialConfigs, ...mercadoConfigs, ...escolinhaConfigs, ...cardsConfigs];
-                allConfigs.forEach((config, index) => {
-                    if (allInputs[index]) {
-                        allInputs[index].value = config.default.toFixed(2);
-                    }
-                });
+                if (!confirm('Restaurar todos os valores para os padrões iniciais?')) return;
+
+                // Restaura a estrutura original
+                const defaultData = {
+                    residencial: [
+                        { id: 'prestacao', label: 'Prestação apartamento', desc: 'Financiamento ou aluguel', icon: 'fa-building', default: 2039 },
+                        { id: 'iptu', label: 'IPTU', desc: 'Imposto Predial (mensal)', icon: 'fa-file-invoice', default: 150 },
+                        { id: 'taxa_lixo', label: 'Taxa de lixo', desc: 'Coleta urbana', icon: 'fa-trash-alt', default: 23 },
+                        { id: 'internet', label: 'Internet', desc: 'Fibra óptica', icon: 'fa-wifi', default: 150 },
+                        { id: 'iptv', label: 'IPTV / Streaming', desc: 'Canais por assinatura', icon: 'fa-tv', default: 50 },
+                        { id: 'agua', label: 'Água', desc: 'Consumo mensal', icon: 'fa-tint', default: 100 },
+                        { id: 'luz', label: 'Luz', desc: 'Energia elétrica', icon: 'fa-bolt', default: 100 },
+                        { id: 'carro_fin', label: 'Carro (financiamento)', desc: 'Parcela do veículo', icon: 'fa-car', default: 700 },
+                        { id: 'carro_seguro', label: 'Carro (seguro)', desc: 'Proteção automotiva', icon: 'fa-shield-alt', default: 250 },
+                        { id: 'carro_combust', label: 'Carro (combustível)', desc: 'Gasolina / etanol', icon: 'fa-gas-pump', default: 350 },
+                        { id: 'carro_manut', label: 'Carro (manutenção)', desc: 'Revisões e reparos', icon: 'fa-wrench', default: 150 }
+                    ],
+                    mercado: [
+                        { id: 'mercado_alimentos', label: 'Alimentos básicos', desc: 'Arroz, feijão, massas', icon: 'fa-bread-slice', default: 350 },
+                        { id: 'mercado_carnes', label: 'Carnes e frango', desc: 'Carne bovina, frango, peixe', icon: 'fa-drumstick-bite', default: 280 },
+                        { id: 'mercado_feira', label: 'Frutas e verduras', desc: 'Feira livre / hortifruti', icon: 'fa-apple-alt', default: 150 },
+                        { id: 'mercado_bebidas', label: 'Bebidas', desc: 'Refrigerantes, sucos, leite', icon: 'fa-wine-bottle', default: 120 },
+                        { id: 'mercado_higiene', label: 'Higiene pessoal', desc: 'Shampoo, sabonete, fraldas', icon: 'fa-soap', default: 130 },
+                        { id: 'mercado_limpeza', label: 'Limpeza', desc: 'Detergente, amaciante', icon: 'fa-broom', default: 80 }
+                    ],
+                    escolinha: [
+                        { id: 'escolinha_mensalidade', label: 'Mensalidade', desc: 'Taxa mensal da escolinha', icon: 'fa-calendar-check', default: 250 },
+                        { id: 'escolinha_material', label: 'Material esportivo', desc: 'Bolas, cones, etc.', icon: 'fa-baseball-ball', default: 80 },
+                        { id: 'escolinha_uniforme', label: 'Uniforme', desc: 'Camisa, calção, meias', icon: 'fa-tshirt', default: 120 },
+                        { id: 'escolinha_transporte', label: 'Transporte', desc: 'Ida e volta aos treinos', icon: 'fa-bus', default: 150 },
+                        { id: 'escolinha_extra', label: 'Atividades extras', desc: 'Torneios, chuteiras', icon: 'fa-trophy', default: 90 }
+                    ],
+                    cartoes: [
+                        { id: 'cartao_itau', label: 'Cartão Itaú', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 320 },
+                        { id: 'cartao_brasil', label: 'Cartão do Brasil', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 280 },
+                        { id: 'cartao_bradesco', label: 'Cartão Bradesco', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 410 },
+                        { id: 'cartao_nubank', label: 'Cartão Nubank', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 550 },
+                        { id: 'cartao_palmeira', label: 'Cartão Palmeiras', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 190 },
+                        { id: 'cartao_magalu', label: 'Cartão Magalu', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 230 }
+                    ]
+                };
+
+                expenseData = JSON.parse(JSON.stringify(defaultData));
+                inputMap = {};
+                rebuildAllGrids();
                 updateReport();
                 scheduleSave();
             }
@@ -2108,33 +2726,37 @@
 
             // ---------- EVENTOS ----------
             function attachEvents() {
-                allInputs.forEach(input => {
-                    input.addEventListener('input', function() {
-                        let value = this.value.replace(',', '.');
-                        if (value !== '') {
-                            let num = parseFloat(value);
-                            if (!isNaN(num) && num >= 0) {}
-                        }
-                        updateReport();
-                    });
-
-                    input.addEventListener('blur', function() {
-                        let val = parseFloat(this.value.replace(',', '.'));
-                        if (!isNaN(val) && val >= 0) {
-                            this.value = val.toFixed(2);
-                        } else if (this.value.trim() === '') {
-                            this.value = '0.00';
-                        } else {
-                            let clean = this.value.replace(/[^0-9,.]/g, '').replace(',', '.');
-                            let num = parseFloat(clean);
-                            if (!isNaN(num) && num >= 0) {
-                                this.value = num.toFixed(2);
-                            } else {
-                                this.value = '0.00';
+                // Atualiza relatório ao digitar
+                Object.keys(inputMap).forEach(id => {
+                    const input = inputMap[id];
+                    if (input) {
+                        input.addEventListener('input', function() {
+                            let value = this.value.replace(',', '.');
+                            if (value !== '') {
+                                let num = parseFloat(value);
+                                if (!isNaN(num) && num >= 0) {}
                             }
-                        }
-                        updateReport();
-                    });
+                            updateReport();
+                        });
+
+                        input.addEventListener('blur', function() {
+                            let val = parseFloat(this.value.replace(',', '.'));
+                            if (!isNaN(val) && val >= 0) {
+                                this.value = val.toFixed(2);
+                            } else if (this.value.trim() === '') {
+                                this.value = '0.00';
+                            } else {
+                                let clean = this.value.replace(/[^0-9,.]/g, '').replace(',', '.');
+                                let num = parseFloat(clean);
+                                if (!isNaN(num) && num >= 0) {
+                                    this.value = num.toFixed(2);
+                                } else {
+                                    this.value = '0.00';
+                                }
+                            }
+                            updateReport();
+                        });
+                    }
                 });
 
                 resetBtn.addEventListener('click', resetToDefaults);
@@ -2144,19 +2766,17 @@
 
             // ---------- INICIALIZAÇÃO ----------
             function init() {
-                const resInputs = buildCards(residentialConfigs, residentialGrid, false, false, false);
-                residentialCount = resInputs.length;
+                // Constrói todas as grids
+                buildCards('residencial');
+                buildCards('mercado');
+                buildCards('escolinha');
+                buildCards('cartoes');
 
-                const mercadoInputs = buildCards(mercadoConfigs, mercadoGrid, false, true, false);
-                mercadoCount = mercadoInputs.length;
+                residentialCount = expenseData.residencial.length;
+                mercadoCount = expenseData.mercado.length;
+                escolinhaCount = expenseData.escolinha.length;
 
-                const escolinhaInputs = buildCards(escolinhaConfigs, escolinhaGrid, false, false, true);
-                escolinhaCount = escolinhaInputs.length;
-
-                const cardInputs = buildCards(cardsConfigs, cardsGrid, true, false, false);
-
-                allInputs = [...resInputs, ...mercadoInputs, ...escolinhaInputs, ...cardInputs];
-
+                // Carrega dados salvos
                 const loaded = loadFromLocalStorage();
 
                 setupTabs();
@@ -2177,6 +2797,11 @@
                     saveToLocalStorage();
                 });
             }
+
+            // Expor funções para uso global
+            window.openModal = openModal;
+            window.closeModal = closeModal;
+            window.confirmModal = confirmModal;
 
             init();
         })();
