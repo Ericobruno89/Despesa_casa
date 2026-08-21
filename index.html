@@ -70,6 +70,8 @@
             --success: #2e7d32;
             --danger: #c62828;
             --warning: #e65100;
+            --paid: #2e7d32;
+            --unpaid: #c62828;
         }
 
         .container {
@@ -252,6 +254,7 @@
             display: flex;
             gap: 8px;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .btn-add {
@@ -276,6 +279,38 @@
             box-shadow: 0 4px 16px rgba(27, 94, 32, 0.25);
         }
 
+        .filter-btns {
+            display: flex;
+            gap: 4px;
+            background: rgba(255, 255, 255, 0.5);
+            padding: 3px;
+            border-radius: 30px;
+            border: 1px solid var(--border);
+        }
+
+        .filter-btn {
+            padding: 4px 12px;
+            border: none;
+            background: transparent;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .filter-btn:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .filter-btn.active {
+            background: var(--primary-gradient);
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(27, 94, 32, 0.15);
+        }
+
         .badge-total {
             font-size: 0.75rem;
             background: var(--badge-bg);
@@ -289,7 +324,7 @@
         /* --- GRADE DE DESPESAS --- */
         .expense-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             gap: 10px;
         }
 
@@ -312,6 +347,24 @@
             border-color: var(--primary);
             box-shadow: 0 4px 16px var(--shadow-hover);
             transform: translateY(-2px);
+        }
+
+        .expense-card.pago {
+            border-left: 4px solid var(--paid);
+        }
+
+        .expense-card.pago .expense-icon {
+            background: rgba(46, 125, 50, 0.12);
+            color: #2e7d32;
+        }
+
+        .expense-card.nao-pago {
+            border-left: 4px solid var(--unpaid);
+        }
+
+        .expense-card.nao-pago .expense-icon {
+            background: rgba(198, 40, 40, 0.12);
+            color: #c62828;
         }
 
         .expense-card .card-actions {
@@ -345,6 +398,31 @@
         .expense-card .card-actions .btn-delete:hover {
             color: #dc2626;
             background: #fee2e2;
+        }
+
+        .expense-card .card-actions .btn-status {
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .expense-card .card-actions .btn-status.pagar {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .expense-card .card-actions .btn-status.pagar:hover {
+            background: #c8e6c9;
+        }
+
+        .expense-card .card-actions .btn-status.pago {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .expense-card .card-actions .btn-status.pago:hover {
+            background: #ffcdd2;
         }
 
         .expense-icon {
@@ -386,6 +464,27 @@
             color: var(--text-muted);
             display: block;
             line-height: 1.3;
+        }
+
+        .expense-info .status-badge {
+            font-size: 0.55rem;
+            font-weight: 700;
+            padding: 1px 8px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .status-badge.pago {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status-badge.nao-pago {
+            background: #ffebee;
+            color: #c62828;
         }
 
         .expense-input-wrapper {
@@ -549,6 +648,33 @@
             background: #ffebee;
             color: #c62828;
         }
+
+        /* --- CONTADOR DE CONTAS --- */
+        .contas-resumo {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            padding: 10px 0 4px 0;
+        }
+
+        .contas-resumo .item {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .contas-resumo .item .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .dot.pago { background: #2e7d32; }
+        .dot.nao-pago { background: #c62828; }
+        .dot.total { background: var(--primary); }
 
         /* --- MODAL --- */
         .modal-overlay {
@@ -1275,6 +1401,12 @@
             .analise-panel {
                 grid-template-columns: 1fr 1fr;
             }
+            .filter-btns {
+                margin-top: 4px;
+            }
+            .contas-resumo {
+                gap: 10px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1291,6 +1423,9 @@
             }
             .expense-card {
                 padding: 10px 12px;
+            }
+            .expense-card .card-actions {
+                opacity: 1;
             }
             .expense-icon {
                 width: 34px;
@@ -1351,11 +1486,15 @@
                 width: 100%;
                 justify-content: center;
             }
-            .expense-card .card-actions {
-                opacity: 1;
-            }
             .analise-panel {
                 grid-template-columns: 1fr;
+            }
+            .filter-btns {
+                width: 100%;
+                justify-content: center;
+            }
+            .contas-resumo {
+                font-size: 0.7rem;
             }
         }
     </style>
@@ -1458,6 +1597,25 @@
                 </div>
             </div>
             <div class="expense-grid" id="cardsGrid"></div>
+
+            <!-- CONTADOR DE CONTAS -->
+            <div class="contas-resumo" id="contasResumo">
+                <span class="item"><span class="dot total"></span> Total: <strong id="totalContas">0</strong></span>
+                <span class="item"><span class="dot pago"></span> Pagas: <strong id="totalPagas">0</strong></span>
+                <span class="item"><span class="dot nao-pago"></span> Não pagas: <strong id="totalNaoPagas">0</strong></span>
+            </div>
+
+            <!-- FILTROS -->
+            <div class="section-header" style="margin-top: 8px; margin-bottom: 12px;">
+                <div style="font-size: 0.8rem; color: var(--text-secondary);">
+                    <i class="fas fa-filter"></i> Filtrar por status
+                </div>
+                <div class="filter-btns" id="filterContainer">
+                    <button class="filter-btn active" data-filter="all">Todas</button>
+                    <button class="filter-btn" data-filter="pago">Pagas</button>
+                    <button class="filter-btn" data-filter="nao-pago">Não pagas</button>
+                </div>
+            </div>
 
             <!-- RESUMO -->
             <div class="summary-area">
@@ -1772,44 +1930,46 @@
             // ---------- CONFIGURAÇÃO DAS DESPESAS ----------
             let expenseData = {
                 residencial: [
-                    { id: 'prestacao', label: 'Prestação apartamento', desc: 'Financiamento ou aluguel', icon: 'fa-building', default: 2039 },
-                    { id: 'iptu', label: 'IPTU', desc: 'Imposto Predial (mensal)', icon: 'fa-file-invoice', default: 150 },
-                    { id: 'taxa_lixo', label: 'Taxa de lixo', desc: 'Coleta urbana', icon: 'fa-trash-alt', default: 23 },
-                    { id: 'internet', label: 'Internet', desc: 'Fibra óptica', icon: 'fa-wifi', default: 150 },
-                    { id: 'iptv', label: 'IPTV / Streaming', desc: 'Canais por assinatura', icon: 'fa-tv', default: 50 },
-                    { id: 'agua', label: 'Água', desc: 'Consumo mensal', icon: 'fa-tint', default: 100 },
-                    { id: 'luz', label: 'Luz', desc: 'Energia elétrica', icon: 'fa-bolt', default: 100 },
-                    { id: 'carro_fin', label: 'Carro (financiamento)', desc: 'Parcela do veículo', icon: 'fa-car', default: 700 },
-                    { id: 'carro_seguro', label: 'Carro (seguro)', desc: 'Proteção automotiva', icon: 'fa-shield-alt', default: 250 },
-                    { id: 'carro_combust', label: 'Carro (combustível)', desc: 'Gasolina / etanol', icon: 'fa-gas-pump', default: 350 },
-                    { id: 'carro_manut', label: 'Carro (manutenção)', desc: 'Revisões e reparos', icon: 'fa-wrench', default: 150 }
+                    { id: 'prestacao', label: 'Prestação apartamento', desc: 'Financiamento ou aluguel', icon: 'fa-building', default: 2039, pago: false },
+                    { id: 'iptu', label: 'IPTU', desc: 'Imposto Predial (mensal)', icon: 'fa-file-invoice', default: 150, pago: false },
+                    { id: 'taxa_lixo', label: 'Taxa de lixo', desc: 'Coleta urbana', icon: 'fa-trash-alt', default: 23, pago: false },
+                    { id: 'internet', label: 'Internet', desc: 'Fibra óptica', icon: 'fa-wifi', default: 150, pago: false },
+                    { id: 'iptv', label: 'IPTV / Streaming', desc: 'Canais por assinatura', icon: 'fa-tv', default: 50, pago: false },
+                    { id: 'agua', label: 'Água', desc: 'Consumo mensal', icon: 'fa-tint', default: 100, pago: false },
+                    { id: 'luz', label: 'Luz', desc: 'Energia elétrica', icon: 'fa-bolt', default: 100, pago: false },
+                    { id: 'carro_fin', label: 'Carro (financiamento)', desc: 'Parcela do veículo', icon: 'fa-car', default: 700, pago: false },
+                    { id: 'carro_seguro', label: 'Carro (seguro)', desc: 'Proteção automotiva', icon: 'fa-shield-alt', default: 250, pago: false },
+                    { id: 'carro_combust', label: 'Carro (combustível)', desc: 'Gasolina / etanol', icon: 'fa-gas-pump', default: 350, pago: false },
+                    { id: 'carro_manut', label: 'Carro (manutenção)', desc: 'Revisões e reparos', icon: 'fa-wrench', default: 150, pago: false }
                 ],
                 mercado: [
-                    { id: 'mercado_alimentos', label: 'Alimentos básicos', desc: 'Arroz, feijão, massas', icon: 'fa-bread-slice', default: 350 },
-                    { id: 'mercado_carnes', label: 'Carnes e frango', desc: 'Carne bovina, frango, peixe', icon: 'fa-drumstick-bite', default: 280 },
-                    { id: 'mercado_feira', label: 'Frutas e verduras', desc: 'Feira livre / hortifruti', icon: 'fa-apple-alt', default: 150 },
-                    { id: 'mercado_bebidas', label: 'Bebidas', desc: 'Refrigerantes, sucos, leite', icon: 'fa-wine-bottle', default: 120 },
-                    { id: 'mercado_higiene', label: 'Higiene pessoal', desc: 'Shampoo, sabonete, fraldas', icon: 'fa-soap', default: 130 },
-                    { id: 'mercado_limpeza', label: 'Limpeza', desc: 'Detergente, amaciante', icon: 'fa-broom', default: 80 }
+                    { id: 'mercado_alimentos', label: 'Alimentos básicos', desc: 'Arroz, feijão, massas', icon: 'fa-bread-slice', default: 350, pago: false },
+                    { id: 'mercado_carnes', label: 'Carnes e frango', desc: 'Carne bovina, frango, peixe', icon: 'fa-drumstick-bite', default: 280, pago: false },
+                    { id: 'mercado_feira', label: 'Frutas e verduras', desc: 'Feira livre / hortifruti', icon: 'fa-apple-alt', default: 150, pago: false },
+                    { id: 'mercado_bebidas', label: 'Bebidas', desc: 'Refrigerantes, sucos, leite', icon: 'fa-wine-bottle', default: 120, pago: false },
+                    { id: 'mercado_higiene', label: 'Higiene pessoal', desc: 'Shampoo, sabonete, fraldas', icon: 'fa-soap', default: 130, pago: false },
+                    { id: 'mercado_limpeza', label: 'Limpeza', desc: 'Detergente, amaciante', icon: 'fa-broom', default: 80, pago: false }
                 ],
                 escolinha: [
-                    { id: 'escolinha_mensalidade', label: 'Mensalidade', desc: 'Taxa mensal da escolinha', icon: 'fa-calendar-check', default: 250 },
-                    { id: 'escolinha_material', label: 'Material esportivo', desc: 'Bolas, cones, etc.', icon: 'fa-baseball-ball', default: 80 },
-                    { id: 'escolinha_uniforme', label: 'Uniforme', desc: 'Camisa, calção, meias', icon: 'fa-tshirt', default: 120 },
-                    { id: 'escolinha_transporte', label: 'Transporte', desc: 'Ida e volta aos treinos', icon: 'fa-bus', default: 150 },
-                    { id: 'escolinha_extra', label: 'Atividades extras', desc: 'Torneios, chuteiras', icon: 'fa-trophy', default: 90 }
+                    { id: 'escolinha_mensalidade', label: 'Mensalidade', desc: 'Taxa mensal da escolinha', icon: 'fa-calendar-check', default: 250, pago: false },
+                    { id: 'escolinha_material', label: 'Material esportivo', desc: 'Bolas, cones, etc.', icon: 'fa-baseball-ball', default: 80, pago: false },
+                    { id: 'escolinha_uniforme', label: 'Uniforme', desc: 'Camisa, calção, meias', icon: 'fa-tshirt', default: 120, pago: false },
+                    { id: 'escolinha_transporte', label: 'Transporte', desc: 'Ida e volta aos treinos', icon: 'fa-bus', default: 150, pago: false },
+                    { id: 'escolinha_extra', label: 'Atividades extras', desc: 'Torneios, chuteiras', icon: 'fa-trophy', default: 90, pago: false }
                 ],
                 cartoes: [
-                    { id: 'cartao_itau', label: 'Cartão Itaú', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 320 },
-                    { id: 'cartao_brasil', label: 'Cartão do Brasil', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 280 },
-                    { id: 'cartao_bradesco', label: 'Cartão Bradesco', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 410 },
-                    { id: 'cartao_nubank', label: 'Cartão Nubank', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 550 },
-                    { id: 'cartao_palmeira', label: 'Cartão Palmeiras', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 190 },
-                    { id: 'cartao_magalu', label: 'Cartão Magalu', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 230 }
+                    { id: 'cartao_itau', label: 'Cartão Itaú', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 320, pago: false },
+                    { id: 'cartao_brasil', label: 'Cartão do Brasil', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 280, pago: false },
+                    { id: 'cartao_bradesco', label: 'Cartão Bradesco', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 410, pago: false },
+                    { id: 'cartao_nubank', label: 'Cartão Nubank', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 550, pago: false },
+                    { id: 'cartao_palmeira', label: 'Cartão Palmeiras', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 190, pago: false },
+                    { id: 'cartao_magalu', label: 'Cartão Magalu', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 230, pago: false }
                 ]
             };
 
             let receitasData = [];
+            let currentFilter = 'all';
+            let filterListeners = [];
 
             const categoryClasses = {
                 residencial: '',
@@ -1830,6 +1990,9 @@
             const escolinhaTotalLabel = document.getElementById('escolinhaTotalLabel');
             const receitasTotalLabel = document.getElementById('receitasTotalLabel');
             const resetBtn = document.getElementById('resetBtn');
+            const totalContas = document.getElementById('totalContas');
+            const totalPagas = document.getElementById('totalPagas');
+            const totalNaoPagas = document.getElementById('totalNaoPagas');
 
             // Análise
             const analiseReceitas = document.getElementById('analiseReceitas');
@@ -1864,6 +2027,7 @@
             const saveMonthBtn = document.getElementById('saveMonthBtn');
             const clearHistoryBtn = document.getElementById('clearHistoryBtn');
             const themeGrid = document.getElementById('themeGrid');
+            const filterContainer = document.getElementById('filterContainer');
 
             const tabBtns = document.querySelectorAll('.tab-btn');
             const tabContents = document.querySelectorAll('.tab-content');
@@ -2007,8 +2171,34 @@
                 const sorted = [...configs].sort((a, b) => a.label.localeCompare(b.label));
 
                 sorted.forEach((config) => {
+                    // Aplica filtro
+                    if (currentFilter === 'pago' && !config.pago) {
+                        // Não mostra se filtro é "pago" e a conta não está paga
+                        // Vamos esconder via CSS
+                    }
+                    if (currentFilter === 'nao-pago' && config.pago) {
+                        // Não mostra se filtro é "não pago" e a conta está paga
+                    }
+
                     const card = document.createElement('div');
                     card.className = 'expense-card';
+                    card.dataset.id = config.id;
+                    card.dataset.pago = config.pago ? 'true' : 'false';
+
+                    if (config.pago) {
+                        card.classList.add('pago');
+                    } else {
+                        card.classList.add('nao-pago');
+                    }
+
+                    // Aplica filtro via CSS
+                    if (currentFilter === 'pago' && !config.pago) {
+                        card.style.display = 'none';
+                    } else if (currentFilter === 'nao-pago' && config.pago) {
+                        card.style.display = 'none';
+                    } else {
+                        card.style.display = 'flex';
+                    }
 
                     const iconDiv = document.createElement('div');
                     iconDiv.className = 'expense-icon';
@@ -2026,6 +2216,12 @@
                     desc.className = 'small-desc';
                     desc.textContent = config.desc || '';
                     infoDiv.appendChild(desc);
+
+                    // Status badge
+                    const statusBadge = document.createElement('span');
+                    statusBadge.className = `status-badge ${config.pago ? 'pago' : 'nao-pago'}`;
+                    statusBadge.textContent = config.pago ? '✓ Pago' : '⏳ Não pago';
+                    infoDiv.appendChild(statusBadge);
 
                     const wrapper = document.createElement('div');
                     wrapper.className = 'expense-input-wrapper';
@@ -2047,6 +2243,18 @@
 
                     const actionsDiv = document.createElement('div');
                     actionsDiv.className = 'card-actions';
+
+                    // Botão de status (pagar/despagar)
+                    const statusBtn = document.createElement('button');
+                    statusBtn.className = `btn-status ${config.pago ? 'pago' : 'pagar'}`;
+                    statusBtn.innerHTML = config.pago ? '<i class="fas fa-undo"></i> Despagar' : '<i class="fas fa-check"></i> Pagar';
+                    statusBtn.title = config.pago ? 'Marcar como não pago' : 'Marcar como pago';
+                    statusBtn.onclick = (e) => {
+                        e.stopPropagation();
+                        toggleStatus(category, config.id);
+                    };
+                    actionsDiv.appendChild(statusBtn);
+
                     const editBtn = document.createElement('button');
                     editBtn.className = 'btn-edit';
                     editBtn.innerHTML = '<i class="fas fa-pen"></i>';
@@ -2074,9 +2282,30 @@
 
                     inputMap[config.id] = input;
                     inputs.push(input);
+
+                    // Event listener para atualizar status ao mudar valor
+                    input.addEventListener('change', function() {
+                        // Atualiza o valor padrão
+                        const idx = expenseData[category].findIndex(e => e.id === config.id);
+                        if (idx >= 0) {
+                            expenseData[category][idx].default = parseFloat(this.value) || 0;
+                        }
+                        updateAll();
+                    });
                 });
 
                 return inputs;
+            }
+
+            // ---------- TOGGLE STATUS ----------
+            function toggleStatus(category, id) {
+                const idx = expenseData[category].findIndex(e => e.id === id);
+                if (idx >= 0) {
+                    expenseData[category][idx].pago = !expenseData[category][idx].pago;
+                    rebuildAllGrids();
+                    updateAll();
+                    scheduleSave();
+                }
             }
 
             // ---------- RECEITAS ----------
@@ -2154,6 +2383,14 @@
 
                     receitaInputMap[config.id] = input;
                     inputs.push(input);
+
+                    input.addEventListener('change', function() {
+                        const idx = receitasData.findIndex(e => e.id === config.id);
+                        if (idx >= 0) {
+                            receitasData[idx].default = parseFloat(this.value) || 0;
+                        }
+                        updateAll();
+                    });
                 });
 
                 return inputs;
@@ -2185,7 +2422,8 @@
                     label: data.label,
                     desc: data.desc || '',
                     icon: data.icon || 'fa-credit-card',
-                    default: parseFloat(data.value) || 0
+                    default: parseFloat(data.value) || 0,
+                    pago: false
                 };
 
                 expenseData[category].push(newExpense);
@@ -2406,6 +2644,34 @@
                 closeModalReceita();
             }
 
+            // ---------- FILTROS ----------
+            function setupFilters() {
+                const filterBtns = filterContainer.querySelectorAll('.filter-btn');
+                filterBtns.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        filterBtns.forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+                        currentFilter = this.dataset.filter;
+                        applyFilter();
+                    });
+                });
+            }
+
+            function applyFilter() {
+                const cards = document.querySelectorAll('.expense-card');
+                cards.forEach(card => {
+                    if (card.dataset.pago === undefined) return;
+                    const isPago = card.dataset.pago === 'true';
+                    if (currentFilter === 'all') {
+                        card.style.display = 'flex';
+                    } else if (currentFilter === 'pago') {
+                        card.style.display = isPago ? 'flex' : 'none';
+                    } else if (currentFilter === 'nao-pago') {
+                        card.style.display = !isPago ? 'flex' : 'none';
+                    }
+                });
+            }
+
             // ---------- CÁLCULOS ----------
             function getTotalReceitas() {
                 let total = 0;
@@ -2452,6 +2718,22 @@
                 return cats;
             }
 
+            function getContasStatus() {
+                let total = 0;
+                let pagas = 0;
+                let naoPagas = 0;
+
+                Object.keys(expenseData).forEach(cat => {
+                    expenseData[cat].forEach(item => {
+                        total++;
+                        if (item.pago) pagas++;
+                        else naoPagas++;
+                    });
+                });
+
+                return { total, pagas, naoPagas };
+            }
+
             // ---------- ATUALIZAR TUDO ----------
             function updateAll() {
                 const totalGastos = getTotalGastos();
@@ -2459,6 +2741,7 @@
                 const cats = getGastosPorCategoria();
                 const saldo = totalReceitas - totalGastos;
                 const mediaDiaria = totalGastos / daysInMonth;
+                const contas = getContasStatus();
 
                 // Atualiza totais das categorias
                 totalNumberSpan.textContent = totalGastos.toFixed(2);
@@ -2466,6 +2749,11 @@
                 mercadoTotalLabel.textContent = `Total: R$ ${cats.mercado.toFixed(2)}`;
                 escolinhaTotalLabel.textContent = `Total: R$ ${cats.escolinha.toFixed(2)}`;
                 receitasTotalLabel.textContent = `Total: R$ ${totalReceitas.toFixed(2)}`;
+
+                // Atualiza contador de contas
+                totalContas.textContent = contas.total;
+                totalPagas.textContent = contas.pagas;
+                totalNaoPagas.textContent = contas.naoPagas;
 
                 // Atualiza análise
                 analiseReceitas.textContent = `R$ ${totalReceitas.toFixed(2)}`;
@@ -2533,6 +2821,9 @@
                 barEscolinhaValue.textContent = `R$ ${cats.escolinha.toFixed(0)}`;
                 barCartoesValue.textContent = `R$ ${cats.cartoes.toFixed(0)}`;
                 barReceitasValue.textContent = `R$ ${totalReceitas.toFixed(0)}`;
+
+                // Aplica filtro novamente
+                applyFilter();
 
                 scheduleSave();
             }
@@ -3131,40 +3422,40 @@
 
                 const defaultData = {
                     residencial: [
-                        { id: 'prestacao', label: 'Prestação apartamento', desc: 'Financiamento ou aluguel', icon: 'fa-building', default: 2039 },
-                        { id: 'iptu', label: 'IPTU', desc: 'Imposto Predial (mensal)', icon: 'fa-file-invoice', default: 150 },
-                        { id: 'taxa_lixo', label: 'Taxa de lixo', desc: 'Coleta urbana', icon: 'fa-trash-alt', default: 23 },
-                        { id: 'internet', label: 'Internet', desc: 'Fibra óptica', icon: 'fa-wifi', default: 150 },
-                        { id: 'iptv', label: 'IPTV / Streaming', desc: 'Canais por assinatura', icon: 'fa-tv', default: 50 },
-                        { id: 'agua', label: 'Água', desc: 'Consumo mensal', icon: 'fa-tint', default: 100 },
-                        { id: 'luz', label: 'Luz', desc: 'Energia elétrica', icon: 'fa-bolt', default: 100 },
-                        { id: 'carro_fin', label: 'Carro (financiamento)', desc: 'Parcela do veículo', icon: 'fa-car', default: 700 },
-                        { id: 'carro_seguro', label: 'Carro (seguro)', desc: 'Proteção automotiva', icon: 'fa-shield-alt', default: 250 },
-                        { id: 'carro_combust', label: 'Carro (combustível)', desc: 'Gasolina / etanol', icon: 'fa-gas-pump', default: 350 },
-                        { id: 'carro_manut', label: 'Carro (manutenção)', desc: 'Revisões e reparos', icon: 'fa-wrench', default: 150 }
+                        { id: 'prestacao', label: 'Prestação apartamento', desc: 'Financiamento ou aluguel', icon: 'fa-building', default: 2039, pago: false },
+                        { id: 'iptu', label: 'IPTU', desc: 'Imposto Predial (mensal)', icon: 'fa-file-invoice', default: 150, pago: false },
+                        { id: 'taxa_lixo', label: 'Taxa de lixo', desc: 'Coleta urbana', icon: 'fa-trash-alt', default: 23, pago: false },
+                        { id: 'internet', label: 'Internet', desc: 'Fibra óptica', icon: 'fa-wifi', default: 150, pago: false },
+                        { id: 'iptv', label: 'IPTV / Streaming', desc: 'Canais por assinatura', icon: 'fa-tv', default: 50, pago: false },
+                        { id: 'agua', label: 'Água', desc: 'Consumo mensal', icon: 'fa-tint', default: 100, pago: false },
+                        { id: 'luz', label: 'Luz', desc: 'Energia elétrica', icon: 'fa-bolt', default: 100, pago: false },
+                        { id: 'carro_fin', label: 'Carro (financiamento)', desc: 'Parcela do veículo', icon: 'fa-car', default: 700, pago: false },
+                        { id: 'carro_seguro', label: 'Carro (seguro)', desc: 'Proteção automotiva', icon: 'fa-shield-alt', default: 250, pago: false },
+                        { id: 'carro_combust', label: 'Carro (combustível)', desc: 'Gasolina / etanol', icon: 'fa-gas-pump', default: 350, pago: false },
+                        { id: 'carro_manut', label: 'Carro (manutenção)', desc: 'Revisões e reparos', icon: 'fa-wrench', default: 150, pago: false }
                     ],
                     mercado: [
-                        { id: 'mercado_alimentos', label: 'Alimentos básicos', desc: 'Arroz, feijão, massas', icon: 'fa-bread-slice', default: 350 },
-                        { id: 'mercado_carnes', label: 'Carnes e frango', desc: 'Carne bovina, frango, peixe', icon: 'fa-drumstick-bite', default: 280 },
-                        { id: 'mercado_feira', label: 'Frutas e verduras', desc: 'Feira livre / hortifruti', icon: 'fa-apple-alt', default: 150 },
-                        { id: 'mercado_bebidas', label: 'Bebidas', desc: 'Refrigerantes, sucos, leite', icon: 'fa-wine-bottle', default: 120 },
-                        { id: 'mercado_higiene', label: 'Higiene pessoal', desc: 'Shampoo, sabonete, fraldas', icon: 'fa-soap', default: 130 },
-                        { id: 'mercado_limpeza', label: 'Limpeza', desc: 'Detergente, amaciante', icon: 'fa-broom', default: 80 }
+                        { id: 'mercado_alimentos', label: 'Alimentos básicos', desc: 'Arroz, feijão, massas', icon: 'fa-bread-slice', default: 350, pago: false },
+                        { id: 'mercado_carnes', label: 'Carnes e frango', desc: 'Carne bovina, frango, peixe', icon: 'fa-drumstick-bite', default: 280, pago: false },
+                        { id: 'mercado_feira', label: 'Frutas e verduras', desc: 'Feira livre / hortifruti', icon: 'fa-apple-alt', default: 150, pago: false },
+                        { id: 'mercado_bebidas', label: 'Bebidas', desc: 'Refrigerantes, sucos, leite', icon: 'fa-wine-bottle', default: 120, pago: false },
+                        { id: 'mercado_higiene', label: 'Higiene pessoal', desc: 'Shampoo, sabonete, fraldas', icon: 'fa-soap', default: 130, pago: false },
+                        { id: 'mercado_limpeza', label: 'Limpeza', desc: 'Detergente, amaciante', icon: 'fa-broom', default: 80, pago: false }
                     ],
                     escolinha: [
-                        { id: 'escolinha_mensalidade', label: 'Mensalidade', desc: 'Taxa mensal da escolinha', icon: 'fa-calendar-check', default: 250 },
-                        { id: 'escolinha_material', label: 'Material esportivo', desc: 'Bolas, cones, etc.', icon: 'fa-baseball-ball', default: 80 },
-                        { id: 'escolinha_uniforme', label: 'Uniforme', desc: 'Camisa, calção, meias', icon: 'fa-tshirt', default: 120 },
-                        { id: 'escolinha_transporte', label: 'Transporte', desc: 'Ida e volta aos treinos', icon: 'fa-bus', default: 150 },
-                        { id: 'escolinha_extra', label: 'Atividades extras', desc: 'Torneios, chuteiras', icon: 'fa-trophy', default: 90 }
+                        { id: 'escolinha_mensalidade', label: 'Mensalidade', desc: 'Taxa mensal da escolinha', icon: 'fa-calendar-check', default: 250, pago: false },
+                        { id: 'escolinha_material', label: 'Material esportivo', desc: 'Bolas, cones, etc.', icon: 'fa-baseball-ball', default: 80, pago: false },
+                        { id: 'escolinha_uniforme', label: 'Uniforme', desc: 'Camisa, calção, meias', icon: 'fa-tshirt', default: 120, pago: false },
+                        { id: 'escolinha_transporte', label: 'Transporte', desc: 'Ida e volta aos treinos', icon: 'fa-bus', default: 150, pago: false },
+                        { id: 'escolinha_extra', label: 'Atividades extras', desc: 'Torneios, chuteiras', icon: 'fa-trophy', default: 90, pago: false }
                     ],
                     cartoes: [
-                        { id: 'cartao_itau', label: 'Cartão Itaú', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 320 },
-                        { id: 'cartao_brasil', label: 'Cartão do Brasil', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 280 },
-                        { id: 'cartao_bradesco', label: 'Cartão Bradesco', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 410 },
-                        { id: 'cartao_nubank', label: 'Cartão Nubank', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 550 },
-                        { id: 'cartao_palmeira', label: 'Cartão Palmeiras', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 190 },
-                        { id: 'cartao_magalu', label: 'Cartão Magalu', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 230 }
+                        { id: 'cartao_itau', label: 'Cartão Itaú', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 320, pago: false },
+                        { id: 'cartao_brasil', label: 'Cartão do Brasil', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 280, pago: false },
+                        { id: 'cartao_bradesco', label: 'Cartão Bradesco', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 410, pago: false },
+                        { id: 'cartao_nubank', label: 'Cartão Nubank', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 550, pago: false },
+                        { id: 'cartao_palmeira', label: 'Cartão Palmeiras', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 190, pago: false },
+                        { id: 'cartao_magalu', label: 'Cartão Magalu', desc: 'Fatura mensal', icon: 'fa-credit-card', default: 230, pago: false }
                     ]
                 };
 
@@ -3172,6 +3463,9 @@
                 receitasData = [];
                 inputMap = {};
                 receitaInputMap = {};
+                currentFilter = 'all';
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                document.querySelector('.filter-btn[data-filter="all"]')?.classList.add('active');
                 rebuildAllGrids();
                 updateAll();
                 scheduleSave();
@@ -3207,11 +3501,6 @@
                     const input = inputMap[id];
                     if (input) {
                         input.addEventListener('input', function() {
-                            let value = this.value.replace(',', '.');
-                            if (value !== '') {
-                                let num = parseFloat(value);
-                                if (!isNaN(num) && num >= 0) {}
-                            }
                             updateAll();
                         });
 
@@ -3230,6 +3519,15 @@
                                     this.value = '0.00';
                                 }
                             }
+                            // Atualiza o valor padrão
+                            let found = false;
+                            Object.keys(expenseData).forEach(cat => {
+                                const idx = expenseData[cat].findIndex(e => e.id === id);
+                                if (idx >= 0) {
+                                    expenseData[cat][idx].default = parseFloat(this.value) || 0;
+                                    found = true;
+                                }
+                            });
                             updateAll();
                         });
                     }
@@ -3258,6 +3556,10 @@
                                     this.value = '0.00';
                                 }
                             }
+                            const idx = receitasData.findIndex(e => e.id === id);
+                            if (idx >= 0) {
+                                receitasData[idx].default = parseFloat(this.value) || 0;
+                            }
                             updateAll();
                         });
                     }
@@ -3279,6 +3581,7 @@
                 const loaded = loadFromLocalStorage();
 
                 setupTabs();
+                setupFilters();
                 attachEvents();
                 updateAll();
 
